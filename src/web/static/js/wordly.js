@@ -1,13 +1,27 @@
 
 const web = "http://127.0.0.1:5000/"
 
-const letter = function () {
-    this.letter = ko.observable("");
+const letter = function (i) {
+    this.letter = ko.observable(i || "");
     this.status = ko.observable(0); // 0 - неактивен, 1 - нет в слове, 2 - есть, но на другом месте, 3 - есть, на этом месте
 }
 
 const rowWord = function () {
     this.letters = ko.observableArray([new letter(), new letter(), new letter(), new letter(), new letter()]);
+}
+
+const keyboard = function () {
+    this.keys = ko.observableArray([
+        // первый ряд
+        new letter("й"), new letter("ц"), new letter("у"), new letter("к"), new letter("е"), new letter("н"),
+        new letter("г"), new letter("ш"), new letter("щ"), new letter("з"), new letter("х"), new letter("ъ"),
+        // второй ряд
+        new letter("ф"), new letter("ы"), new letter("в"), new letter("а"), new letter("п"), new letter("р"),
+        new letter("о"), new letter("л"), new letter("д"), new letter("ж"), new letter("э"),
+        // третий ряд
+        new letter("я"), new letter("ч"), new letter("с"), new letter("м"), new letter("и"), new letter("т"),
+        new letter("ь"), new letter("б"), new letter("ю"),
+    ]);
 }
 
 const vm = function () {
@@ -24,6 +38,7 @@ const vm = function () {
                         new rowWord(),
                         new rowWord(),
                         new rowWord()]);
+    this.keyboard = ko.observable(new keyboard());
 
     this.getWord = () => {
         const req = new XMLHttpRequest();
@@ -61,6 +76,11 @@ const vm = function () {
                         let array = JSON.parse(req.responseText);
                         for (i = 0; i < array.length; ++i) {
                             self.board()[self.currentTry()].letters()[i].status(array[i]);
+                            self.keyboard().keys().forEach((item) => {
+                                if (item.letter() === self.board()[self.currentTry()].letters()[i].letter() && item.status() < array[i]) {
+                                    item.status(array[i]);
+                                }
+                            });
                         }
                         toastr.success("Вы выиграли!");
                     } else if (req.readyState == 4 && req.status == 400) {
@@ -70,14 +90,17 @@ const vm = function () {
                         let array = JSON.parse(req.responseText);
                         for (i = 0; i < array.length; ++i) {
                             self.board()[self.currentTry()].letters()[i].status(array[i]);
+                            self.keyboard().keys().forEach((item) => {
+                                if (item.letter() === self.board()[self.currentTry()].letters()[i].letter() && item.status() < array[i]) {
+                                    item.status(array[i]);
+                                }
+                            });
                         }
                         self.currentTry(self.currentTry() + 1);
                         self.currentPos(0);
                         if (self.currentTry() > self.countTry) {
-                            toastr.error("Вы проиграли!");
-                        } else {
+                            toastr.error(`Вы проиграли!<br>Слово: ${self.word()}`);
                         }
-                        console.log(req.responseText)
                     }
                 }
                 req.send("word=" + self.word() + "&resultWord=" + resultWord);

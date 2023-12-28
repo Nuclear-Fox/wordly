@@ -24,6 +24,7 @@ h1 {
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
+  padding-bottom: 5px;
 }
 
 #keyboard-cont {

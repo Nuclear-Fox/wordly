@@ -39,58 +39,118 @@
                             </div>
                         </div>
                         <div class="col-sm-12">
-                            <div id="keyboard-cont">
+                            <div id="keyboard-cont" data-bind="using: keyboard().keys()">
                                 <!-- блок с первым рядом -->
                                 <div class="first-row">
                                     <!-- блоки с отдельными кнопками -->
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('й')}">й</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('ц')}">ц</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('у')}">у</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('к')}">к</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('е')}">е</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('н')}">н</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('г')}">г</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('ш')}">ш</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('щ')}">щ</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('з')}">з</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('х')}">х</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('ъ')}">ъ</button>
+                                    <button class="keyboard-button" data-bind="text: $data[0].letter(),
+                                                    click: () => {$root.addLetter( $data[0].letter())},
+                                                    class: `color-${$data[0].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[1].letter(),
+                                                    click: () => {$root.addLetter( $data[1].letter())},
+                                                    class: `color-${$data[1].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[2].letter(),
+                                                    click: () => {$root.addLetter( $data[2].letter())},
+                                                    class: `color-${$data[2].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[3].letter(),
+                                                    click: () => {$root.addLetter( $data[3].letter())},
+                                                    class: `color-${$data[3].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[4].letter(),
+                                                    click: () => {$root.addLetter( $data[4].letter())},
+                                                    class: `color-${$data[4].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[5].letter(),
+                                                    click: () => {$root.addLetter( $data[5].letter())},
+                                                    class: `color-${$data[5].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[6].letter(),
+                                                    click: () => {$root.addLetter( $data[6].letter())},
+                                                    class: `color-${$data[6].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[7].letter(),
+                                                    click: () => {$root.addLetter( $data[7].letter())},
+                                                    class: `color-${$data[7].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[8].letter(),
+                                                    click: () => {$root.addLetter( $data[8].letter())},
+                                                    class: `color-${$data[8].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[9].letter(),
+                                                    click: () => {$root.addLetter( $data[9].letter())},
+                                                    class: `color-${$data[9].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[10].letter(),
+                                                    click: () => {$root.addLetter( $data[10].letter())},
+                                                    class: `color-${$data[10].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[11].letter(),
+                                                    click: () => {$root.addLetter( $data[11].letter())},
+                                                    class: `color-${$data[11].status()}`"></button>
                                 </div>
                                 <div class="second-row">
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('ф')}">ф</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('ы')}">ы</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('в')}">в</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('а')}">а</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('п')}">п</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('р')}">р</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('о')}">о</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('л')}">л</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('д')}">д</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('ж')}">ж</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('э')}">э</button>
+                                    <button class="keyboard-button" data-bind="text: $data[12].letter(),
+                                                    click: () => {$root.addLetter( $data[12].letter())},
+                                                    class: `color-${$data[12].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[13].letter(),
+                                                    click: () => {$root.addLetter( $data[13].letter())},
+                                                    class: `color-${$data[13].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[14].letter(),
+                                                    click: () => {$root.addLetter( $data[14].letter())},
+                                                    class: `color-${$data[14].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[15].letter(),
+                                                    click: () => {$root.addLetter( $data[15].letter())},
+                                                    class: `color-${$data[15].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[16].letter(),
+                                                    click: () => {$root.addLetter( $data[16].letter())},
+                                                    class: `color-${$data[16].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[17].letter(),
+                                                    click: () => {$root.addLetter( $data[17].letter())},
+                                                    class: `color-${$data[17].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[18].letter(),
+                                                    click: () => {$root.addLetter( $data[18].letter())},
+                                                    class: `color-${$data[18].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[19].letter(),
+                                                    click: () => {$root.addLetter( $data[19].letter())},
+                                                    class: `color-${$data[19].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[20].letter(),
+                                                    click: () => {$root.addLetter( $data[20].letter())},
+                                                    class: `color-${$data[20].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[21].letter(),
+                                                    click: () => {$root.addLetter( $data[21].letter())},
+                                                    class: `color-${$data[21].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[22].letter(),
+                                                    click: () => {$root.addLetter( $data[22].letter())},
+                                                    class: `color-${$data[22].status()}`"></button>
                                 </div>
                                 <div class="third-row">
-                                    <button class="keyboard-button-big" data-bind="click: eraseLetter">Backspace</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('я')}">я</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('ч')}">ч</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('с')}">с</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('м')}">м</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('и')}">и</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('т')}">т</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('ь')}">ь</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('б')}">б</button>
-                                    <button class="keyboard-button" data-bind="click: () => {addLetter('ю')}">ю</button>
-                                    <button class="keyboard-button-big" data-bind="click: checkWord">Enter</button>
+                                    <button class="keyboard-button-big" data-bind="click: $root.eraseLetter">Backspace</button>
+                                    <button class="keyboard-button" data-bind="text: $data[23].letter(),
+                                                    click: () => {$root.addLetter( $data[23].letter())},
+                                                    class: `color-${$data[23].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[24].letter(),
+                                                    click: () => {$root.addLetter( $data[24].letter())},
+                                                    class: `color-${$data[24].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[25].letter(),
+                                                    click: () => {$root.addLetter( $data[25].letter())},
+                                                    class: `color-${$data[25].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[26].letter(),
+                                                    click: () => {$root.addLetter( $data[26].letter())},
+                                                    class: `color-${$data[26].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[27].letter(),
+                                                    click: () => {$root.addLetter( $data[27].letter())},
+                                                    class: `color-${$data[27].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[28].letter(),
+                                                    click: () => {$root.addLetter( $data[28].letter())},
+                                                    class: `color-${$data[28].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[29].letter(),
+                                                    click: () => {$root.addLetter( $data[29].letter())},
+                                                    class: `color-${$data[29].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[30].letter(),
+                                                    click: () => {$root.addLetter( $data[30].letter())},
+                                                    class: `color-${$data[30].status()}`"></button>
+                                    <button class="keyboard-button" data-bind="text: $data[31].letter(),
+                                                    click: () => {$root.addLetter( $data[31].letter())},
+                                                    class: `color-${$data[31].status()}`"></button>
+                                    <button class="keyboard-button-big" data-bind="click: $root.checkWord">Enter</button>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
-
-
-
         </div>
     </div>
 
