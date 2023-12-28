@@ -1,25 +1,32 @@
-const req = new XMLHttpRequest();
-const web = "http://127.0.0.1:5000/"
-const defaultBoard = [
-                        ["", "", "", "", ""],
-                        ["", "", "", "", ""],
-                        ["", "", "", "", ""],
-                        ["", "", "", "", ""],
-                        ["", "", "", "", ""],
-                        ["", "", "", "", ""]
-                    ];
 
-var vm = function () {
+const web = "http://127.0.0.1:5000/"
+
+const letter = function () {
+    this.letter = ko.observable("");
+    this.status = ko.observable(0); // 0 - неактивен, 1 - нет в слове, 2 - есть, но на другом месте, 3 - есть, на этом месте
+}
+
+const rowWord = function () {
+    this.letters = ko.observableArray([new letter(), new letter(), new letter(), new letter(), new letter()]);
+}
+
+const vm = function () {
     var self = this;
 
-    this.countTry = 6;
+    this.countTry = 5; // с нуля
     this.currentTry = ko.observable(0);
     this.currentPos = ko.observable(0);
     this.title = "5 букв";
     this.word = ko.observable("");
-    this.board = ko.observableArray(defaultBoard);
+    this.board = ko.observableArray([new rowWord(),
+                        new rowWord(),
+                        new rowWord(),
+                        new rowWord(),
+                        new rowWord(),
+                        new rowWord()]);
 
     this.getWord = () => {
+        const req = new XMLHttpRequest();
         req.open("GET", web+"getWord", true);
         req.addEventListener("load", function() {
             self.word(req.responseText);
@@ -28,35 +35,55 @@ var vm = function () {
     }
 
     this.addLetter = (letter) => {
-        if (self.currentPos() < 5) {
-            console.log(letter);
-            self.board()[self.currentTry()][self.currentPos()] = letter;
+        if (self.currentPos() < 5 && self.currentTry() <= self.countTry) {
+            //console.log(letter);
+            self.board()[self.currentTry()].letters()[self.currentPos()].letter(letter);
             self.currentPos(self.currentPos() + 1);
-            //self.board.valueHasMutated();
         }
     }
 
     this.eraseLetter = () => {
-        if (self.currentPos() > 0) {
+        if (self.currentPos() > 0 && self.currentTry() <= self.countTry) {
             self.currentPos(self.currentPos() - 1);
-            self.board()[self.currentTry()][self.currentPos()] = "";
+            self.board()[self.currentTry()].letters()[self.currentPos()].letter("");
         }
     }
 
     this.checkWord = () => {
-        let resultWord = self.board()[self.currentTry()].reduce((word, letter) => word + letter, "");
-        if (resultWord.length === 5) {
-            req.open("POST", "checkWord", true);
-            req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            //req.onreadystatechange = function() {//Call a function when the state changes.
-            //    if (req.readyState == 4 && req.status == 200) {
-            //        alert(req.responseText);
-            //    }
-            //}
-            //req.addEventListener("load", function() {
-            //    self.word(req.responseText);
-            //});
-            req.send("word=" + self.word() + "&resultWord=" + resultWord);
+        if (vmApp.currentTry() <= vmApp.countTry) {
+            let resultWord = self.board()[self.currentTry()].letters().reduce((word, letter) => word + letter.letter(), "");
+            if (resultWord.length === 5) {
+                const req = new XMLHttpRequest();
+                req.open("POST", "checkWord", true);
+                req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                req.onreadystatechange = () => {
+                    if (req.readyState == 4 && req.status == 200) {
+                        let array = JSON.parse(req.responseText);
+                        for (i = 0; i < array.length; ++i) {
+                            self.board()[self.currentTry()].letters()[i].status(array[i]);
+                        }
+                        toastr.success("Вы выиграли!");
+                    } else if (req.readyState == 4 && req.status == 400) {
+                        toastr.error(req.responseText);
+                    }
+                    else if (req.readyState == 4) {
+                        let array = JSON.parse(req.responseText);
+                        for (i = 0; i < array.length; ++i) {
+                            self.board()[self.currentTry()].letters()[i].status(array[i]);
+                        }
+                        self.currentTry(self.currentTry() + 1);
+                        self.currentPos(0);
+                        if (self.currentTry() > self.countTry) {
+                            toastr.error("Вы проиграли!");
+                        } else {
+                        }
+                        console.log(req.responseText)
+                    }
+                }
+                req.send("word=" + self.word() + "&resultWord=" + resultWord);
+            } else {
+                toastr.error("Слово должно состоять из 5 букв!");
+            }
         }
     }
 }
@@ -64,8 +91,8 @@ var vmApp = new vm();
 
 window.addEventListener("keyup", (e) => {
 
-    if (typeof e !== "undefined") {
-        if (e.key.match(/[а-яА-ЯЁё]/gi)) {
+    if (typeof e !== "undefined" && vmApp.currentTry() <= vmApp.countTry) {
+        if (e.key.match(/[а-яА-ЯЁё]/gi) && e.key !== "ё") {
             vmApp.addLetter(e.key);
         } else if (e.key === "Enter") {
             vmApp.checkWord();
@@ -78,6 +105,21 @@ window.addEventListener("keyup", (e) => {
 
 ko.applyBindings(vmApp, document.getElementById("wordly"));
 
+toastr.options = {
+  "closeButton": true,
+  "debug": false,
+  "progressBar": false,
+  "preventDuplicates": true,
+  "positionClass": "toast-top-right",
+  "onclick": null,
+  "showDuration": "400",
+  "hideDuration": "1000",
+  "timeOut": "7000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+};
+
 vmApp.getWord();
-
-
