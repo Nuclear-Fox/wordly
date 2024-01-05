@@ -1,5 +1,7 @@
-from service import wordly_service
-from flask import Flask, request, render_template, Response
+# -*- coding: utf-8 -*-
+
+import wordly_service
+from flask import Flask, request, render_template
 
 app = Flask(__name__)
 

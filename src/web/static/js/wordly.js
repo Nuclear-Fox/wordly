@@ -39,6 +39,20 @@ const vm = function () {
                         new rowWord(),
                         new rowWord()]);
     this.keyboard = ko.observable(new keyboard());
+    this.backspaceText = ko.computed(() => {
+        if (window.screen.availWidth <= 580) {
+            return "⌫";
+        } else {
+            return "Backspace";
+        }
+    });
+    this.enterText = ko.computed(() => {
+        if (window.screen.availWidth <= 580) {
+            return "↵";
+        } else {
+            return "Enter";
+        }
+    });
 
     this.getWord = () => {
         const req = new XMLHttpRequest();
@@ -73,6 +87,7 @@ const vm = function () {
                 req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 req.onreadystatechange = () => {
                     if (req.readyState == 4 && req.status == 200) {
+
                         let array = JSON.parse(req.responseText);
                         for (i = 0; i < array.length; ++i) {
                             self.board()[self.currentTry()].letters()[i].status(array[i]);
@@ -83,8 +98,10 @@ const vm = function () {
                             });
                         }
                         toastr.success("Вы выиграли!");
+                        self.currentTry(7);
                     } else if (req.readyState == 4 && req.status == 400) {
                         toastr.error(req.responseText);
+
                     }
                     else if (req.readyState == 4) {
                         let array = JSON.parse(req.responseText);
@@ -122,6 +139,8 @@ window.addEventListener("keyup", (e) => {
         } else if (e.key === "Backspace") {
             vmApp.eraseLetter();
         }
+    } else if (vmApp.currentTry() > vmApp.countTry && e.key === "Enter") {
+        location.reload();
     }
 
 });
