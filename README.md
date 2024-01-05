@@ -9,4 +9,4 @@ docker-compose -f docker/docker-compose.yml up -d
 Приложение развертывается локально по адресу 127.0.0.1:5000
 
 # API
-Для получения случайного слова из банка реализована возможность послать get-запрос. Пример запроса представлен в виде коллекции Postman: https://api.postman.com/collections/31475780-69b25446-b4bf-4b0e-842d-c470c2e2e2fc?access_key=PMAT-01HKCJMJS181S813AAZSNB7295
+Для получения случайного слова из банка реализована возможность послать get-запрос. Пример запроса представлен в виде коллекции Postman: https://www.postman.com/avionics-geoscientist-66862444/workspace/wordly
