@@ -18,7 +18,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="col-sm-12" id="wordly">
+        <div class="col-sm-12" id="wordly" style="style: {'padding-top': `${window.screen.availWidth <= 580 ? '50px' : '0px'}`}">
             <div class="ibox">
                 <div class="ibox-title">
                     <div class="row m-b-sm">
@@ -116,7 +116,7 @@
                                                     class: `color-${$data[22].status()}`"></button>
                                 </div>
                                 <div class="third-row">
-                                    <button class="keyboard-button-big" data-bind="click: $root.eraseLetter">Backspace</button>
+                                    <button class="keyboard-button-big" data-bind="text: $root.backspaceText(), click: $root.eraseLetter"></button>
                                     <button class="keyboard-button" data-bind="text: $data[23].letter(),
                                                     click: () => {$root.addLetter( $data[23].letter())},
                                                     class: `color-${$data[23].status()}`"></button>
@@ -144,7 +144,7 @@
                                     <button class="keyboard-button" data-bind="text: $data[31].letter(),
                                                     click: () => {$root.addLetter( $data[31].letter())},
                                                     class: `color-${$data[31].status()}`"></button>
-                                    <button class="keyboard-button-big" data-bind="click: $root.checkWord">Enter</button>
+                                    <button class="keyboard-button-big" data-bind="text: $root.enterText(), click: $root.checkWord"></button>
                                 </div>
                             </div>
                         </div>

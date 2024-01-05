@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import random
 import json
 from flask import Response
@@ -18,14 +20,17 @@ def check_word(word, result_word):
     else:
         result = []
         for i in range(0, len(word)):
-            find_res = word.find(result_word[i])
-            if (find_res == -1):
-                result.append(no_place)
-            elif (find_res == i):
+            if (result_word[i] == word[i]):
                 result.append(right_place)
             else:
-                result.append(wrong_place)
-        print(result)
+                find_res = word.find(result_word[i])
+                if (find_res == -1):
+                    result.append(no_place)
+                elif (find_res == i):
+                    result.append(right_place)
+                else:
+                    result.append(wrong_place)
+        #print(result)
         return Response(json.dumps(result), status=444)
 
 
@@ -36,6 +41,10 @@ words = [
   'аванс',
   'аврал',
   'автор',
+  'миска',
+  'кокос',
+  'сонет',
+  'бугор',
   'агент',
   'адрес',
   'азарт',
